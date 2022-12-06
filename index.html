@@ -7,23 +7,25 @@
 </head>
 
 <body>
-
+<div class="left">
     <div class="rangeslider">
         <input type="range" min="1" max="48" value="24" class="myslider" id="sliderRange">
-        <p>value: <span id="rangeResult"></span></p>
+        <p><span id="rangeResult">slide for grid</span></p>
     </div>
     <div class="settings">
-        <input id="colorPicker" type="color"/>
+        <input id="colorDropper" type="color"/>
         <button id="colorBtn">Color</button>
         <button id="rainbowBtn">Rainbow</button>
         <button id="shadowBtn">Shadow</button>
         <button id="eraserBtn">Eraser</button>
         <button id="resetBtn">Reset</button>
     </div>
+</div>
 
-    <div id="grid">
+    <div class="right">
+        <div id="grid">
+        </div>
     </div>
-
 </body>
 
 <script type="text/javascript" src="script.js"></script>
