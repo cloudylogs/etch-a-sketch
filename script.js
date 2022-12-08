@@ -33,8 +33,9 @@ function createGrid() {
     }
   });
   const colored = document.querySelector("square");
+  console.log(colored); // null
   colored.addEventListener("mousedown", (e) => {
-    e.target.classList.replace("square", "color");
+    e.target.style.backgroundColor = "black";
   });
 }
 
