@@ -3,14 +3,11 @@
 // DEFAULTS
 const defaultSize = 20;
 
-// slider related
-
-
 const grid = document.getElementById("grid");
 function createGrid(defaultSize) {
   grid.style.gridTemplateRows = `repeat(${defaultSize}, 1fr)`;
   grid.style.gridTemplateColumns = `repeat(${defaultSize}, 1fr)`;
-  for (let i = 1; i < defaultSize * defaultSize; i++) {
+  for (let i = 1; i <= defaultSize * defaultSize; i++) {
     const square = document.createElement("div");
     square.classList.add("square");
     square.addEventListener("mouseover", function (e) {
@@ -25,21 +22,11 @@ const output = document.getElementById("rangeResult");
 slider.oninput = function () {
   output.innerHTML = this.value;
 };
-let squares = slider.value;
 slider.addEventListener("change", () => {
   let squares = slider.value;
   grid.innerHTML = "";
-  grid.style.gridTemplateRows = `repeat(${squares}, 1fr)`;
-  grid.style.gridTemplateColumns = `repeat(${squares}, 1fr)`;
-  for (let i = 0; i < squares * squares; i++) {
-    const square = document.createElement("div");
-    square.classList.add("square");
-    square.addEventListener("mouseover", function (e) {
-      e.target.style.backgroundColor = "black";
-    });
-    grid.appendChild(square);
-  }
-});
+  createGrid(squares)
+;});
 
 const rainbowBtn = document.getElementById("rainbowBtn");
 function getRainbow() {
@@ -52,9 +39,10 @@ function getRainbow() {
 }
 
 rainbowBtn.addEventListener("click", function () {
-  for (let i = 0; i < squares * squares; i++) {
+  let area = slider.value * slider.value;
+  for (let i = 0; i <= area; i++) {
     let pixel = grid.children;
-    pixel[i].addEventListener("mouseover", function (e) {
+    pixel[i].addEventListener("mouseover", (e) => {
       e.target.style.backgroundColor = getRainbow();
     });
   }
@@ -64,8 +52,9 @@ const colorDropper = document.getElementById("colorDropper");
 colorDropper.addEventListener("input", function () {
   let newColor = colorDropper.value;
   let pixel = grid.children;
-  for (let i = 0; i < squares * squares; i++) {
-    pixel[i].addEventListener("mouseover", function (e) {
+  let area = slider.value * slider.value;
+  for (let i = 0; i <= area; i++) {
+    pixel[i].addEventListener("mouseover", (e) => {
       e.target.style.backgroundColor = newColor;
     });
   }
@@ -74,8 +63,9 @@ colorDropper.addEventListener("input", function () {
 const eraserBtn = document.getElementById("eraserBtn");
 eraserBtn.addEventListener("click", function () {
   let pixel = grid.children;
-  for (let i = 0; i < squares * squares; i++) {
-    pixel[i].addEventListener("mouseover", function (e) {
+  let area = slider.value * slider.value;
+  for (let i = 0; i <= area; i++) {
+    pixel[i].addEventListener("mouseover", (e) => {
       e.target.style.backgroundColor = "white";
     });
   }
