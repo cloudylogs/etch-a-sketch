@@ -1,13 +1,22 @@
 "use strict";
 
 // DEFAULTS
-const defaultSize = 20;
+const DEFAULT_SIZE = 20;
 
+// GLOBALS
 const grid = document.getElementById("grid");
-function createGrid(defaultSize) {
-  grid.style.gridTemplateRows = `repeat(${defaultSize}, 1fr)`;
-  grid.style.gridTemplateColumns = `repeat(${defaultSize}, 1fr)`;
-  for (let i = 1; i <= defaultSize * defaultSize; i++) {
+const slider = document.getElementById("sliderRange");
+const output = document.getElementById("rangeResult");
+const rainbowBtn = document.getElementById("rainbowBtn");
+const colorDropper = document.getElementById("colorDropper");
+const eraserBtn = document.getElementById("eraserBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+
+function createGrid(size) {
+  grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+  grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+  for (let i = 1; i <= size * size; i++) {
     const square = document.createElement("div");
     square.classList.add("square");
     square.addEventListener("mouseover", function (e) {
@@ -17,69 +26,53 @@ function createGrid(defaultSize) {
   }
 }
 
-const slider = document.getElementById("sliderRange");
-const output = document.getElementById("rangeResult");
-slider.oninput = function () {
-  output.innerHTML = this.value;
-};
-slider.addEventListener("change", () => {
-  let squares = slider.value;
-  grid.innerHTML = "";
-  createGrid(squares)
-;});
-
-const rainbowBtn = document.getElementById("rainbowBtn");
-function getRainbow() {
-  let letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+function getRandomColor() {
+	const letters = '0123456789ABCDEF';
+	let color = '#';
+	for (let i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
 }
 
-rainbowBtn.addEventListener("click", function () {
-  let area = slider.value * slider.value;
-  for (let i = 0; i <= area; i++) {
-    let pixel = grid.children;
-    pixel[i].addEventListener("mouseover", (e) => {
-      e.target.style.backgroundColor = getRainbow();
-    });
-  }
-});
-
-const colorDropper = document.getElementById("colorDropper");
-colorDropper.addEventListener("input", function () {
-  let newColor = colorDropper.value;
-  let pixel = grid.children;
-  let area = slider.value * slider.value;
-  for (let i = 0; i <= area; i++) {
-    pixel[i].addEventListener("mouseover", (e) => {
-      e.target.style.backgroundColor = newColor;
-    });
-  }
-});
-
-const eraserBtn = document.getElementById("eraserBtn");
-eraserBtn.addEventListener("click", function () {
-  let pixel = grid.children;
-  let area = slider.value * slider.value;
-  for (let i = 0; i <= area; i++) {
-    pixel[i].addEventListener("mouseover", (e) => {
-      e.target.style.backgroundColor = "white";
-    });
-  }
-});
-
-const resetBtn = document.getElementById("resetBtn");
-resetBtn.addEventListener("click", function(){
-  grid.innerHTML='';
-  createGrid(defaultSize);
-  slider.value = defaultSize;
-  output.innerHTML = defaultSize;
-})
-
 window.onload = () => {
-  createGrid(defaultSize);
-};
+  createGrid(DEFAULT_SIZE);
+  
+  slider.addEventListener('change', (e) => {
+    grid.innerHTML = '';
+    output.innerHTML = e.target.value;
+    createGrid(slider.value);
+  });
 
+	rainbowBtn.addEventListener('click', function () {
+		Array.from(grid.children).forEach((pixel) => {
+			pixel.addEventListener('mouseover', (e) => {
+				e.target.style.backgroundColor = getRandomColor();
+			});
+		});
+  });
+  
+  colorDropper.addEventListener('click', function() {
+    let newColor = colorDropper.value;
+    Array.from(grid.children).forEach((pixel) => {
+      pixel.addEventListener('mouseover', (e) => {
+        e.target.style.backgroundColor = newColor;
+      })
+    })
+  })
+
+  eraserBtn.addEventListener('click', function() {
+    Array.from(grid.children).forEach((pixel) => {
+      pixel.addEventListener('mouseover', (e) => {
+        e.target.style.backgroundColor = 'white';
+      })
+    })
+  })
+
+  resetBtn.addEventListener('click', function() {
+    grid.innerHTML= '';
+    createGrid(DEFAULT_SIZE);
+    slider.value = DEFAULT_SIZE;
+    output.innerHTML = DEFAULT_SIZE;
+  })
+};
