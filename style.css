@@ -25,6 +25,7 @@ body {
 .container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .buttons {
@@ -46,6 +47,12 @@ button, input {
   border-radius: 5px;
   padding: 10px 20px;
   border: 1px solid;
+  width: 40%;
+}
+
+button:hover{
+  transform: scale(1.05);
+  background-color: grey;
 }
 
 #grid {
@@ -66,6 +73,8 @@ button, input {
 
 .slidecontainer {
   width: 30%;
+  display: flex;
+  justify-content: center;
 }
 
 .slider {

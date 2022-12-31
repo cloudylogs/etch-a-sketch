@@ -52,14 +52,16 @@ window.onload = () => {
 		});
   });
   
-  colorDropper.addEventListener('click', function() {
+  colorDropper.addEventListener('input', function() {
     let newColor = colorDropper.value;
     Array.from(grid.children).forEach((pixel) => {
       pixel.addEventListener('mouseover', (e) => {
         e.target.style.backgroundColor = newColor;
+        console.log(newColor);
       })
     })
   })
+
 
   eraserBtn.addEventListener('click', function() {
     Array.from(grid.children).forEach((pixel) => {
