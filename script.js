@@ -12,7 +12,6 @@ const colorDropper = document.getElementById("colorDropper");
 const eraserBtn = document.getElementById("eraserBtn");
 const resetBtn = document.getElementById("resetBtn");
 
-
 function createGrid(size) {
   grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
   grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -27,54 +26,53 @@ function createGrid(size) {
 }
 
 function getRandomColor() {
-	const letters = '0123456789ABCDEF';
-	let color = '#';
-	for (let i = 0; i < 6; i++) {
-		color += letters[Math.floor(Math.random() * 16)];
-	}
-	return color;
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
 
 window.onload = () => {
   createGrid(DEFAULT_SIZE);
-  
-  slider.addEventListener('change', (e) => {
-    grid.innerHTML = '';
+
+  slider.addEventListener("change", (e) => {
+    grid.innerHTML = "";
     output.innerHTML = e.target.value;
     createGrid(slider.value);
   });
 
-	rainbowBtn.addEventListener('click', function () {
-		Array.from(grid.children).forEach((pixel) => {
-			pixel.addEventListener('mouseover', (e) => {
-				e.target.style.backgroundColor = getRandomColor();
-			});
-		});
+  rainbowBtn.addEventListener("click", function () {
+    Array.from(grid.children).forEach((pixel) => {
+      pixel.addEventListener("mouseover", (e) => {
+        e.target.style.backgroundColor = getRandomColor();
+      });
+    });
   });
-  
-  colorDropper.addEventListener('input', function() {
+
+  colorDropper.addEventListener("input", function () {
     let newColor = colorDropper.value;
     Array.from(grid.children).forEach((pixel) => {
-      pixel.addEventListener('mouseover', (e) => {
+      pixel.addEventListener("mouseover", (e) => {
         e.target.style.backgroundColor = newColor;
         console.log(newColor);
-      })
-    })
-  })
+      });
+    });
+  });
 
-
-  eraserBtn.addEventListener('click', function() {
+  eraserBtn.addEventListener("click", function () {
     Array.from(grid.children).forEach((pixel) => {
-      pixel.addEventListener('mouseover', (e) => {
-        e.target.style.backgroundColor = 'white';
-      })
-    })
-  })
+      pixel.addEventListener("mouseover", (e) => {
+        e.target.style.backgroundColor = "white";
+      });
+    });
+  });
 
-  resetBtn.addEventListener('click', function() {
-    grid.innerHTML= '';
+  resetBtn.addEventListener("click", function () {
+    grid.innerHTML = "";
     createGrid(DEFAULT_SIZE);
     slider.value = DEFAULT_SIZE;
     output.innerHTML = DEFAULT_SIZE;
-  })
+  });
 };
